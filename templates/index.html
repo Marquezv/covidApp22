@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>CovidApp - vMarques</title>
+  </head> 
+  <body>
+    
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" >
+      <h1 class="display-1" >Covid-19 <img style="max-width: 8vw; margin-bottom: 15px;" src="/static/img/covid.png"></h1>
+
+      
+    <div class="container col-xxl-8 px-4 py-5">
+      <div class="row col-12">
+
+        <div class="col-sm-12 col-lg-4">
+          <div class="card">
+            <div class="card-body bg-success">
+              <h5 class="card-title text-light">Recuperados</h5>
+               <p class="card-text text-light">{{ places[0].totalRecuperados }}</p>
+               <h5 class="card-title text-light">Em Acompanhamento</h5>
+               <p class="card-text text-light">{{ places[0].casosAtivos }}</p>
+              <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <div class="card">
+            <div class="card-body bg-primary">
+              <h5 class="card-title text-light">Casos Confirmados</h5>
+              <p class="card-text text-light">{{ places[0].totalCasos }}</p>
+              <h5 class="card-title text-light">Casos Novos</h5>
+              <p class="card-text text-light">{{ places[0].novosCasos }}</p>
+              <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <div class="card">
+            <div class="card-body bg-dark">
+              <h5 class="card-title text-light">Óbitos</h5>
+              <p class="card-text text-light">{{ places[0].totalMortes }}</p>
+              <h5 class="card-title text-light">Novos Óbitos</h5>
+              <p class="card-text text-light">{{ places[0].novasMortes }}</p>
+              <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            </div>
+          </div>
+        </div>
+        <p>
+          Fonte: <a href="https://www.worldometers.info/coronavirus/">https://www.worldometers.info/coronavirus/</a>
+        </p>
+        
+      </div>
+    </div>
+      <div class="row">
+
+        <div class="col-10 col-sm-8 col-lg-6">
+           <h1 class="display-4  lh-1 mb-3">Procure um País</h1>
+        <form id="form" action="{{ url_for('index')}}" method="post">
+          <input type="text" name="input_pais" placeholder="insira um pais">
+          <button class="btn btn-primary">Enviar</button>
+          <button class="btn btn-primary">Recarregar</button>
+        </form>
+        </div>
+        <div class="col-lg-5 " style="overflow: auto; max-height: 200px; margin: auto;">
+          <table class="">
+            <thead>
+              <tr>
+                <th class="lead" scope="col">#</th>
+                <th class="lead" scope="col">Local</th>
+                <th class="lead" scope="col">Casos</th>
+                <th class="lead" scope="col">Mortes</th>
+                <th class="lead" scope="col">Curas</th>
+                <th class="lead" scope="col">População</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for place in places %}
+              <tr>
+                <th scope="row">{{ place.posicao }}</th>
+                <td  class="align-middle"><h8>{{ place.local }}</h8></td>
+                <td  class="align-middle"><h8>{{ place.totalCasos }}</h8></td>
+                <td  class="align-middle"><h8>{{ place.totalMortes }}</h8></td>
+                <td  class="align-middle"><h8>{{ place.totalRecuperados }}</h8></td>
+                <td  class="align-middle"><h8>{{ place.populacao }}</h8></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+          
+  
+      <h1 class="display-5 fw-bold" style="margin: auto; margin-top: 4vw">Como se Proteger?</h1>
+
+      <!-- Quadros-->
+      <div class="row" style="margin-top:5vw">
+        <div class="col-lg-6">
+          
+          <img style="max-height: 50vh; margin-bottom: 15px; margin: auto;" src="/static/img/distanciamento.svg">
+        </div>
+        <div class="col-lg-5" style="margin-top: 5vw; text-align: left; font-size: 18px;" >
+          <h4>Distanciamento Social</h4>
+          <p>
+          Limitar o contato entre pessoas infectadas e outras pessoas é importante para reduzir as chances de transmissão. Distância mínima de pelo menos 1 metro de outras pessoas, especialmente daquelas com sintomas respiratórios e um grande número de pessoas (aglomerações) tanto ao ar livre quanto em ambientes fechados.</p>
+        </div>
+      </div>
+
+      <!-- Quadros 2 -->
+       <div class="row" style="margin-top:5vw">
+          <div class="col-lg-6">
+            
+            <img style="max-height: 50vh; margin-bottom: 15px; margin: auto;" src="/static/img/lavarmaos.svg">
+          </div>
+          <div class="col-lg-5" style="margin-top: 5vw; text-align: left; font-size: 18px;" >
+            <h4>Lavar as Mãos</h4>
+            <p>
+            A higienização das mãos é a medida isolada mais efetiva na redução da disseminação de doenças de transmissão respiratória. As evidências atuais indicam que o vírus causador da covid-19 é transmitido por meio de gotículas ou por contato.
+            O vírus também pode ser transferido de uma superfície para outra por meio das mãos contaminadas, o que facilita a transmissão por contato indireto.</p>
+          </div>
+        </div>
+        <!-- Quadros 2 -->
+         <div class="row" style="margin-top:5vw">
+            <div class="col-lg-6">
+              
+              <img style="max-height: 60vh; margin-bottom: 15px; margin: auto;" src="/static/img/mascara.svg">
+            </div>
+            <div class="col-lg-5" style="margin-top: 5vw; text-align: left; font-size: 18px;" >
+              <h4>Uso de Máscaras</h4>
+              <p>
+              As máscaras funcionam como uma barreira física para a liberação dessas gotículas no ar quando há tosse, espirros e até mesmo durante conversas. Seu uso é importante principalmente em locais em que não é possível manter uma distância mínima de segurança. </p>
+            </div>
+            <p>
+              Fontes: <a href="https://coronavirus.saude.mg.gov.br/blog/101-mascaras-e-covid-19">https://coronavirus.saude.mg.gov.br/blog/101-mascaras-e-covid-19</a>
+              <a href="https://www.gov.br/saude/pt-br/coronavirus/como-se-proteger"> | https://www.gov.br/saude/pt-br/coronavirus/como-se-proteger</a>
+            </p>
+        
+          </div>
+        
+
+        
+      <footer class="d-flex flex-wrap justify-content-between align-items-center border-top">
+        <div class="col-md-4 d-flex align-items-center">
+          <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+          </a>
+          <span class="text-muted"><img style="max-width: 4vw; margin-bottom: 15px;" src="/static/img/logo.png">&copy; 2021 - Vinicius Marques de Oliveira</span>
+        </div>
+
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+          
+          <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/vini.marques__/"><img style="max-width: 3vw; margin-bottom: 15px;" src="/static/img/insta-logo.svg"></a></li>
+          
+        </ul>
+      </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    
+    </script>
+  </body>
+</html>
